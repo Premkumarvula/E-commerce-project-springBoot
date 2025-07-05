@@ -6,7 +6,6 @@ on:
       - master2
       - 'releases/**'
 
-
 jobs:
   deploy:
     name: Deploy App
@@ -31,15 +30,14 @@ jobs:
           SOURCE_DIR: './'
           DEST_DIR: 'ecommerce-app'
 
-      - name: Deploy to EC2 using CodeDeploy
-        uses: webfactory/create-aws-codedeploy-deployment@v1
-        with:
-          application-name: EcommerceJavaApp
-          deployment-group: EcommerceDeploymentGroup
-          region: ap-south-1
-          bucket: springboot-deploy-artifacts-prem
-          bundle: ecommerce-app/app.zip
-          wait-until-deployed: true
+      - name: Deploy to EC2 using CodeDeploy via CLI
+        run: |
+          aws deploy create-deployment \
+            --application-name EcommerceJavaApp \
+            --deployment-group-name EcommerceDeploymentGroup \
+            --s3-location bucket=springboot-deploy-artifacts-prem,bundleType=zip,key=ecommerce-app/app.zip \
+            --deployment-config-name CodeDeployDefault.OneAtATime \
+            --region ap-south-1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
