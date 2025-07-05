@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master2
+      - 'releases/**'
 
 
 jobs:
