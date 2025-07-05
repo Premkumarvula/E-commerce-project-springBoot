@@ -24,24 +24,24 @@ jobs:
         with:
           args: --acl private --follow-symlinks --delete
         env:
-          AWS_S3_BUCKET: your-s3-bucket-name
+          AWS_S3_BUCKET: springboot-deploy-artifacts-prem
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_REGION: your-region
+          AWS_REGION: ap-south-1
           SOURCE_DIR: './'
-          DEST_DIR: 'your-app-folder'
+          DEST_DIR: 'ecommerce-app'
 
-      - name: Deploy using CodeDeploy
-        uses: webfactory/create-aws-codedeploy-deployment@v1
+      - name: Deploy to EC2 using CodeDeploy
+        uses: aws-actions/aws-codedeploy-github-deploy@v1
         with:
           application-name: EcommerceJavaApp
           deployment-group: EcommerceDeploymentGroup
           deployment-config-name: CodeDeployDefault.OneAtATime
           bundle-type: zip
           deployment-description: 'Deploy from GitHub Actions'
-          s3-bucket: your-s3-bucket-name
-          s3-key: your-app-folder/app.zip
-          region: your-region
+          s3-bucket: springboot-deploy-artifacts-prem
+          s3-key: ecommerce-app/app.zip
+          region: ap-south-1
           wait-until-deployed: true
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
