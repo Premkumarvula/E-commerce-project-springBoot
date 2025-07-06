@@ -34,7 +34,7 @@ jobs:
         run: |
           aws deploy create-deployment \
             --application-name EcommerceJavaApp \
-            --deployment-group-name EcommerceDeploymentGroup \
+            --deployment-group-name EcommerceDG \
             --deployment-config-name CodeDeployDefault.OneAtATime \
             --s3-location bucket=springboot-deploy-artifacts-prem,key=ecommerce-app/app.zip,bundleType=zip \
             --region ap-south-1
