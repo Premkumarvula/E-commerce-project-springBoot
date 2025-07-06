@@ -35,10 +35,10 @@ jobs:
           aws deploy create-deployment \
             --application-name EcommerceJavaApp \
             --deployment-group-name EcommerceDeploymentGroup \
-            --s3-location bucket=springboot-deploy-artifacts-prem,bundleType=zip,key=ecommerce-app/app.zip \
             --deployment-config-name CodeDeployDefault.OneAtATime \
+            --s3-location bucket=springboot-deploy-artifacts-prem,key=ecommerce-app/app.zip,bundleType=zip \
             --region ap-south-1
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          #hiiiii
+          AWS_REGION: ap-south-1
